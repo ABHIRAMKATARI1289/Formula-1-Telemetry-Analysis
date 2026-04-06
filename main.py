@@ -12,16 +12,13 @@ def main(year=None, round_number=None, playback_speed=1, session_type='R', visib
 
   print(f"Loaded session: {session.event['EventName']} - {session.event['RoundNumber']} - {session_type}")
 
-  # Enable cache for fastf1
   enable_cache()
 
   if session_type == 'Q' or session_type == 'SQ':
 
-    # Get the drivers who participated and their lap times
 
     qualifying_session_data = get_quali_telemetry(session, session_type=session_type)
 
-    # Run the arcade screen showing qualifying results
 
     title = f"{session.event['EventName']} - {'Sprint Qualifying' if session_type == 'SQ' else 'Qualifying Results'}"
     
@@ -34,12 +31,10 @@ def main(year=None, round_number=None, playback_speed=1, session_type='R', visib
 
   else:
 
-    # Get the drivers who participated in the race
+
 
     race_telemetry = get_race_telemetry(session, session_type=session_type)
 
-    # Get example lap for track layout
-    # Qualifying lap preferred for DRS zones (fallback to fastest race lap (no DRS data))
     example_lap = None
     
     try:
@@ -67,14 +62,13 @@ def main(year=None, round_number=None, playback_speed=1, session_type='R', visib
 
     drivers = session.drivers
 
-    # Get circuit rotation
 
     circuit_rotation = get_circuit_rotation(session)
     
-    # Prepare session info for display banner
+
     session_info = {
         'event_name': session.event.get('EventName', ''),
-        'circuit_name': session.event.get('Location', ''),  # Circuit location/name
+        'circuit_name': session.event.get('Location', ''), 
         'country': session.event.get('Country', ''),
         'year': year,
         'round': round_number,
@@ -83,11 +77,11 @@ def main(year=None, round_number=None, playback_speed=1, session_type='R', visib
         'circuit_length_m': float(example_lap["Distance"].max()) if example_lap is not None and "Distance" in example_lap else None,
     }
 
-    # Launch insights menu (always shown with replay)
+
     launch_insights_menu()
     print("Launching insights menu...")
 
-    # Run the arcade replay
+
 
     run_arcade_replay(
       frames=race_telemetry['frames'],
@@ -103,13 +97,13 @@ def main(year=None, round_number=None, playback_speed=1, session_type='R', visib
       ready_file=ready_file,
       session_info=session_info,
       session=session,
-      enable_telemetry=True # This is now permanently enabled to support the telemetry insights menu if the user decides to use it
+      enable_telemetry=True 
     )
 
 if __name__ == "__main__":
 
   if "--cli" in sys.argv:
-    # Run the CLI
+
 
     cli_load()
     sys.exit(0)
@@ -118,13 +112,13 @@ if __name__ == "__main__":
     year_index = sys.argv.index("--year") + 1
     year = int(sys.argv[year_index])
   else:
-    year = 2025  # Default year
+    year = 2025  
 
   if "--round" in sys.argv:
     round_index = sys.argv.index("--round") + 1
     round_number = int(sys.argv[round_index])
   else:
-    round_number = 12  # Default round number
+    round_number = 12  
 
   if "--list-rounds" in sys.argv:
     list_rounds(year)
@@ -139,10 +133,9 @@ if __name__ == "__main__":
     if "--no-hud" in sys.argv:
       visible_hud = False
 
-    # Session type selection
+
     session_type = 'SQ' if "--sprint-qualifying" in sys.argv else ('S' if "--sprint" in sys.argv else ('Q' if "--qualifying" in sys.argv else 'R'))
 
-    # Optional ready-file path used when spawned from the GUI to signal ready state
     ready_file = None
     if "--ready-file" in sys.argv:
       idx = sys.argv.index("--ready-file") + 1
@@ -152,7 +145,7 @@ if __name__ == "__main__":
     main(year, round_number, playback_speed, session_type=session_type, visible_hud=visible_hud, ready_file=ready_file)
     sys.exit(0)
 
-  # Run the GUI
+
 
   app = QApplication(sys.argv)
   win = RaceSelectionWindow()
