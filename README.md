@@ -74,16 +74,6 @@ Potential extensions of this project include:
 
 ---
 
-## Author
-
-Abhiram Katari
-
----
-
-## Note
-
-This project is intended for educational and analytical purposes, demonstrating how real-world motorsport data can be used to generate meaningful insights through data science techniques.
-
 
 
 
