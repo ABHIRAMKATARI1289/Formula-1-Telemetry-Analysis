@@ -1,6 +1,5 @@
 # F1 Telemetry Analysis 🏎️📊
 
-![Race Replay Preview](./resources/preview.png)
 
 ## Overview
 
@@ -10,6 +9,7 @@ The objective of this project is to compare drivers using real race data and vis
 
 This project demonstrates the practical use of data analytics techniques in motorsports and shows how telemetry can be used to extract performance insights.
 
+![Race Replay Preview](./resources/preview.png)
 ---
 
 ## Key Capabilities
